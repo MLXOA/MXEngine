@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
@@ -25,9 +25,6 @@
     <PackageCertificateThumbprint>DE45A09441A7062F09DC40C9598C290C001AE4DF</PackageCertificateThumbprint>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MXEngine.UWP\MXEngine.UWP.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <None Update="d3d11.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
