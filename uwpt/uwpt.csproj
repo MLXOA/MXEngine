@@ -8,11 +8,10 @@
     <Platforms>x86;x64;arm64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <PublishAot>false</PublishAot>
+    <PublishAot>true</PublishAot>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <DisableRuntimeMarshalling>true</DisableRuntimeMarshalling>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 
     <!--
       This is a non-XAML app (just a simple CoreApplication app), so the XAML compiler is not needed.
@@ -21,19 +20,5 @@
       this property should not be disabled if custom PRI resources are needed by the application.      
     -->
     <EnableXamlCompilerTargetsForUwpApps>false</EnableXamlCompilerTargetsForUwpApps>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <PackageCertificateThumbprint>DE45A09441A7062F09DC40C9598C290C001AE4DF</PackageCertificateThumbprint>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MXEngine.UWP\MXEngine.UWP.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="d3d11.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="dxgi.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

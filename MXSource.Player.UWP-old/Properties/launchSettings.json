@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MXSource.Player.UWP": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "uwpt": {
+      "commandName": "MsixPackage"
+    }
+  }
+}

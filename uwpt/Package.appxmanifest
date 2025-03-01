@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="93bcc902-32f3-4eec-8bbd-312ddc70bd16"
-    Publisher="CN=MLXOA"
+    Name="af656d7b-6579-483a-ad40-be32dc630072"
+    Publisher="CN=nlee3"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="93bcc902-32f3-4eec-8bbd-312ddc70bd16" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="af656d7b-6579-483a-ad40-be32dc630072" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MXEngine.Player.UWP</DisplayName>
-    <PublisherDisplayName>MLXOA</PublisherDisplayName>
+    <DisplayName>uwpt</DisplayName>
+    <PublisherDisplayName>nlee3</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="MXEngine.Player.UWP.App">
+      EntryPoint="uwpt.App">
       <uap:VisualElements
-        DisplayName="MXEngine.Player.UWP"
+        DisplayName="uwpt"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="MXEngine.Player.UWP"
+        Description="uwpt"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

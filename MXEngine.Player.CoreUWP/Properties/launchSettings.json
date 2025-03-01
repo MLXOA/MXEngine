@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "MXEngine.Player.CoreUWP": {
+      "commandName": "MsixPackage"
+    }
+  }
+}

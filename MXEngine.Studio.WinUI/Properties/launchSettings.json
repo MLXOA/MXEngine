@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MXEngine.Studio.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "MXEngine.Studio.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
