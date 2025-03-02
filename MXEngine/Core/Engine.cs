@@ -57,7 +57,7 @@ public unsafe class Engine(IWindow Window)
         };
         Interfacing.Audio.Initialize();
         State = EngineState.Running;
-        Interfacing.Audio.CreateMidiPlayer(Interfacing.Audio.RetroSoundfont)
+        Interfacing.Audio.CreateMidiPlayer(Interfacing.Audio.DefaultSoundfont)
             .Play(new MidiFile(Resources.GetStream("MXEngine.Audio.DefaultResources.M_E1M1.mid")!, MidiFileLoopType.None), true);
     }
 

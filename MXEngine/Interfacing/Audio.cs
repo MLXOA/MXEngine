@@ -45,7 +45,6 @@ public unsafe class Audio
     {
         AlContext.Dispose();
         Al.Dispose();
-        _retroSoundFont = null;
         _defaultSoundFont = null;
     }
 }
