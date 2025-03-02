@@ -1,4 +1,5 @@
-﻿using MXEngine.Core;
+﻿using System.Numerics;
+using MXEngine.Core;
 using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
@@ -21,11 +22,17 @@ class Program
         _window.Load += WindowOnLoad;
         _window.Update += WindowOnUpdate;
         _window.Render += WindowOnRender;
+        _window.FramebufferResize += WindowOnFramebufferResize;
         
         _window.Run();
         
         _engine?.Stop();
         _window.Dispose();
+    }
+
+    private static void WindowOnFramebufferResize(Vector2D<int> obj)
+    {
+        _engine!.Size = obj;
     }
 
     private static void WindowOnRender(double deltaTime)
@@ -43,9 +50,7 @@ class Program
 
     private static void WindowOnLoad()
     {
-        GL gl = GL.GetApi(_window);
-        IInputContext inputContext = _window!.CreateInput();
-        _engine = new Engine(gl, inputContext);
+        _engine = new Engine(_window);
         _engine.Start();
     }
 }

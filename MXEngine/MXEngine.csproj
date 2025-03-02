@@ -7,8 +7,37 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\MXEngine.Graphics\MXEngine.Graphics.csproj" />
+    <PackageReference Include="Silk.NET" Version="2.22.0" />
+    <PackageReference Include="Silk.NET.Assimp" Version="2.22.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Graphics\Core\Sphere.obj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Graphics\DefaultResources\Shader.vert" />
+    <EmbeddedResource Include="Graphics\DefaultResources\Shader.vert" />
+    <None Remove="Graphics\DefaultResources\Shader.frag" />
+    <EmbeddedResource Include="Graphics\DefaultResources\Shader.frag" />
+    <None Remove="Graphics\DefaultResources\MissingTexture.png" />
+    <EmbeddedResource Include="Graphics\DefaultResources\MissingTexture.png" />
+    <None Remove="Graphics\DefaultResources\Sphere.obj" />
+    <EmbeddedResource Include="Graphics\DefaultResources\Sphere.obj" />
+    <None Remove="Graphics\DefaultResources\Cube.glb" />
+    <EmbeddedResource Include="Graphics\DefaultResources\Cube.glb" />
+    <None Remove="Graphics\DefaultResources\Cube.obj" />
+    <EmbeddedResource Include="Graphics\DefaultResources\Cube.obj" />
   </ItemGroup>
 
 </Project>

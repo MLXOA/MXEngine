@@ -8,11 +8,12 @@ namespace MXEngine.Game.Data;
 public class Location
 {
     public Vector3 Position = new(0, 0, 0);
+    public Vector3 Scale = new(1, 1, 1);
+    public Quaternion Orientation = Quaternion.Identity;
+
+    public Vector3 Forward = -Vector3.UnitZ;
+    public Vector3 Up = Vector3.UnitY;
+    public Vector3 Direction = Vector3.Zero;
     
-    /// <summary>
-    /// Whether the engine uses a Vector3 or Quaternion for rotation/orientation.
-    /// </summary>
-    public bool UseOrientation = true;
-    public Vector3 Rotation = new(0, 0, 0);
-    public Quaternion Orientation = new(0, 0, 0, 0);
+    public Matrix4x4 ViewMatrix => Matrix4x4.Identity * Matrix4x4.CreateFromQuaternion(Orientation) * Matrix4x4.CreateScale(Scale) * Matrix4x4.CreateTranslation(Position);
 }
