@@ -32,7 +32,7 @@ jobs:
       - name: Publish for Linux
         run: |
           dotnet publish MXEngine.Player -r linux-x64 -o ./linux/x64 --sc
-          dotnet publish MXEngine.Player -r linux-x86 -o ./linux/x86 --sc
+          dotnet publish MXEngine.Player -r linux-musl-x64 -o ./linux/musl-x64 --sc
           zip -r linux.zip ./linux
       - uses: actions/upload-artifact@v4
         with:
