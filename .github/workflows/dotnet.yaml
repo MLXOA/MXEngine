@@ -1,0 +1,42 @@
+﻿# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Publish for Windows
+        run: dotnet publish MXEngine.Player -r win-x64 -o ./win/x64/ --sc
+          dotnet publish MXEngine.Player -r win-x86 -o ./win/x86/ --sc
+          zip -r win.zip ./win
+      - name: Publish for Linux
+        run: dotnet publish MXEngine.Player -r linux-x64 -o ./linux/x64 --sc
+          dotnet publish MXEngine.Player -r linux-x86 -o ./linux/x86 --sc
+          zip -r linux.zip ./linux
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: win.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: linux.zip
