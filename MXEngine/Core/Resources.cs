@@ -11,10 +11,22 @@ public static class Resources
         return assembly.GetManifestResourceStream(resourceName);
     }
 
-    public static BrotliStream? GetBrotliStream(string resourceName)
+    public static Stream? GetDecompressedStream(string resourceName)
     {
         Stream? resourceStream = GetStream(resourceName);
         if (resourceStream == null) return null;
-        return new BrotliStream(resourceStream, CompressionMode.Decompress);
+        using (var compressedMemoryStream = new MemoryStream())
+        {
+            resourceStream.CopyTo(compressedMemoryStream);
+            compressedMemoryStream.Position = 0; // Reset position
+
+            var decompressedMemoryStream = new MemoryStream();
+            using (var brotliStream = new BrotliStream(compressedMemoryStream, CompressionMode.Decompress))
+            {
+                brotliStream.CopyTo(decompressedMemoryStream);
+                decompressedMemoryStream.Position = 0; // Reset position
+                return decompressedMemoryStream;
+            }
+        }
     }
 }
