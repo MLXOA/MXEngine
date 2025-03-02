@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MeltySynth" Version="2.4.1" />
     <PackageReference Include="Silk.NET" Version="2.22.0" />
     <PackageReference Include="Silk.NET.Assimp" Version="2.22.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
@@ -27,6 +28,8 @@
 
   <ItemGroup>
     <None Remove="Graphics\DefaultResources\Shader.vert" />
+    <EmbeddedResource Include="Audio\DefaultResources\Arachno.sf2" />
+    <EmbeddedResource Include="Audio\DefaultResources\SC-55.sf2" />
     <EmbeddedResource Include="Graphics\DefaultResources\Shader.vert" />
     <None Remove="Graphics\DefaultResources\Shader.frag" />
     <EmbeddedResource Include="Graphics\DefaultResources\Shader.frag" />
@@ -35,9 +38,12 @@
     <None Remove="Graphics\DefaultResources\Sphere.obj" />
     <EmbeddedResource Include="Graphics\DefaultResources\Sphere.obj" />
     <None Remove="Graphics\DefaultResources\Cube.glb" />
-    <EmbeddedResource Include="Graphics\DefaultResources\Cube.glb" />
     <None Remove="Graphics\DefaultResources\Cube.obj" />
     <EmbeddedResource Include="Graphics\DefaultResources\Cube.obj" />
+    <None Remove="Graphics\DefaultResources\Arachno.sf2" />
+    <None Remove="Graphics\DefaultResources\SC-55.sf2" />
+    <None Remove="Audio\DefaultResources\M_E1M1.mid" />
+    <EmbeddedResource Include="Audio\DefaultResources\M_E1M1.mid" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,16 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
+using System.Runtime.InteropServices;
+using MeltySynth;
 using MXEngine.Graphics.AppSupport;
 using MXEngine.Graphics.Core;
+using MXEngine.Interfacing;
+using Silk.NET.Core;
 using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
+using Silk.NET.Vulkan;
 using Silk.NET.Windowing;
 
 namespace MXEngine.Core;
@@ -14,16 +19,16 @@ namespace MXEngine.Core;
 /// The <b>core</b> part of MXEngine.
 /// Requires an IWindow instance to create.
 /// </summary>
-public class Engine(IWindow window)
+public unsafe class Engine(IWindow Window)
 {
     public EngineState State = EngineState.None;
     private Thread engineThread;
     internal static Logger _logger = new Logger("MXEngine");
-    public readonly GL Gl = GL.GetApi(window);
+    public readonly GL Gl = GL.GetApi(Window);
     public static Engine Instance;
     public Camera GameCamera;
-    public Vector2D<int> Size = window.Size;
-    internal IWindow Window => window;
+    public Vector2D<int> Size;
+    internal IWindow window => Window;
     
     /// <summary>
     /// Set the engine's state to Starting and create all runtime threads.
@@ -50,7 +55,10 @@ public class Engine(IWindow window)
                 Stop();
             }
         };
+        Interfacing.Audio.Initialize();
         State = EngineState.Running;
+        Interfacing.Audio.CreateMidiPlayer(Interfacing.Audio.RetroSoundfont)
+            .Play(new MidiFile(Resources.GetStream("MXEngine.Audio.DefaultResources.M_E1M1.mid")!, MidiFileLoopType.None), true);
     }
 
     /// <summary>
@@ -59,9 +67,13 @@ public class Engine(IWindow window)
     public void Stop()
     {
         if (State != EngineState.Running) return;
-        State = EngineState.Stopping;
         _logger.Info("Engine stopping.");
+        State = EngineState.Stopping;
+        Interfacing.Audio.Dispose();
+        _logger.Info("Running garbage collection.");
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
         engineThread.Join();
+        _logger.Info("Stopped engine.");
     }
 
     public void Render(double deltaTime)
@@ -112,7 +124,6 @@ public class Engine(IWindow window)
                 GameCamera.Update(deltaTime);
             }
         }
-        _logger.Info("Engine stopped.");
     }
 }
 

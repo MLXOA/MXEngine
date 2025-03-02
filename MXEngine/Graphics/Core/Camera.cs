@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Numerics;
 using MXEngine.Core;
+using MXEngine.Interfacing;
 using MXEngine.Game.Data;
 using Silk.NET.Input;
 using Silk.NET.Maths;
@@ -24,9 +25,9 @@ public class Camera
     public void Initialize()
     {
         Gl = Engine.Instance.Gl;
-        Shader = new Shader(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.Shader.vert"), Resources.GetStream("MXEngine.Graphics.DefaultResources.Shader.frag"));
-        Texture = new Tex2D(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.MissingTexture.png"));
-        Model = new Model(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.Cube.obj"));
+        Shader = new Shader(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.Shader.vert")!, Resources.GetStream("MXEngine.Graphics.DefaultResources.Shader.frag"));
+        Texture = new Tex2D(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.MissingTexture.png")!);
+        Model = new Model(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.Sphere.obj")!);
         Location.Position = new Vector3(0, 0, 5);
         Input.MouseMove += InputOnMouseMove;
     }
@@ -78,7 +79,7 @@ public class Camera
         var model = Matrix4x4.Identity;
         var view = Matrix4x4.CreateLookAt(Location.Position, Location.Position + Location.Forward, Location.Up);
         //Note that the apsect ratio calculation must be performed as a float, otherwise integer division will be performed (truncating the result).
-        var projection = Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45), (float)size.X / size.Y, 0.1f, 100.0f);
+        var projection = Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(80), (float)size.X / size.Y, 0.1f, 1000.0f);
 
         foreach (var mesh in Model.Meshes)
         {
@@ -98,8 +99,8 @@ public class Camera
     {
         if (CameraMode == CameraMode.Freecam)
         {
-            Input.SetCursorMode(CursorMode.Disabled);
-            float moveSpeed = 2.5f * (float)deltaTime;
+            Input.SetCursorMode(CursorMode.Raw);
+            float moveSpeed = 5f * (float)deltaTime;
             IKeyboard? primaryKeyboard = Input.GetKeyboard();
             if (primaryKeyboard != null)
             {

@@ -1,8 +1,9 @@
 ﻿using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.Windowing;
+using MXEngine.Core;
 
-namespace MXEngine.Core;
+namespace MXEngine.Interfacing;
 
 /// <summary>
 /// Input events and methods.

@@ -2,7 +2,6 @@
 using MXEngine.Core;
 using Silk.NET.Input;
 using Silk.NET.Maths;
-using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 
 namespace MXEngine.Player;
@@ -13,7 +12,7 @@ class Program
     private static Engine? _engine;
     static void Main(string[] args)
     {
-        // uses OpenGL 4.3+ (most compatible)
+        // uses vulkan
         var options = WindowOptions.Default;
         options.Size = new Vector2D<int>(800, 600);
         options.Title = "MXEngine";
