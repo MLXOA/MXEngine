@@ -12,20 +12,6 @@ public unsafe class Audio
 
     internal static Device* AlDevice;
     internal static Context* AlDeviceContext;
-
-    private static SoundFont? _retroSoundFont;
-    
-    public static SoundFont RetroSoundfont
-    {
-        get
-        {
-            if (_retroSoundFont == null)
-            {
-                _retroSoundFont = new(Resources.GetStream("MXEngine.Audio.DefaultResources.SC-55.sf2")!);
-            }
-            return _retroSoundFont;
-        }
-    }
     
     private static SoundFont? _defaultSoundFont;
 
@@ -35,7 +21,7 @@ public unsafe class Audio
         {
             if (_defaultSoundFont == null)
             {
-                _defaultSoundFont = new(Resources.GetStream("MXEngine.Audio.DefaultResources.Arachno.sf2")!);
+                _defaultSoundFont = new(Resources.GetBrotliStream("MXEngine.Audio.DefaultResources.SC-55.sf2.br")!);
             }
 
             return _defaultSoundFont;

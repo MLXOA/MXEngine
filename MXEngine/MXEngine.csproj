@@ -44,6 +44,8 @@
     <None Remove="Graphics\DefaultResources\SC-55.sf2" />
     <None Remove="Audio\DefaultResources\M_E1M1.mid" />
     <EmbeddedResource Include="Audio\DefaultResources\M_E1M1.mid" />
+    <None Remove="Audio\DefaultResources\SC-55.sf2.br" />
+    <EmbeddedResource Include="Audio\DefaultResources\SC-55.sf2.br" />
   </ItemGroup>
 
 </Project>
