@@ -21,13 +21,19 @@ public class Camera
     private Tex2D Texture;
     private Model Model;
     private GL Gl;
+    IKeyboard? primaryKeyboard;
 
-    public void Initialize()
+    internal Camera()
     {
+        primaryKeyboard = Input.GetKeyboard();
         Gl = Engine.Instance.Gl;
         Shader = new Shader(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.Shader.vert")!, Resources.GetStream("MXEngine.Graphics.DefaultResources.Shader.frag"));
         Texture = new Tex2D(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.MissingTexture.png")!);
-        Model = new Model(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.Sphere.obj")!);
+        Model = new Model(Gl, Resources.GetStream("MXEngine.Graphics.DefaultResources.Cube.obj")!);
+    }
+
+    public void Initialize()
+    {
         Location.Position = new Vector3(0, 0, 5);
         Input.MouseMove += InputOnMouseMove;
     }
@@ -49,16 +55,14 @@ public class Camera
             var yOffset = (position.Y - LastMousePosition.Y) * lookSensitivity;
             LastMousePosition = position;
 
-            Yaw += xOffset;
-            Pitch -= yOffset;
+            Yaw -= xOffset;
+            Pitch += yOffset;
 
             //We don't want to be able to look behind us by going over our head or under our feet so make sure it stays within these bounds
             Pitch = Math.Clamp(Pitch, -89.0f, 89.0f);
 
-            Location.Direction.X = MathF.Cos(MathHelper.DegreesToRadians(Yaw)) * MathF.Cos(MathHelper.DegreesToRadians(Pitch));
-            Location.Direction.Y = MathF.Sin(MathHelper.DegreesToRadians(Pitch));
-            Location.Direction.Z = MathF.Sin(MathHelper.DegreesToRadians(Yaw)) * MathF.Cos(MathHelper.DegreesToRadians(Pitch));
-            Location.Forward = Vector3.Normalize(Location.Direction);
+            Location.Rotation.X = Pitch;
+            Location.Rotation.Y = Yaw;
         }
     }
 
@@ -78,8 +82,8 @@ public class Camera
 
         var model = Matrix4x4.Identity;
         var view = Matrix4x4.CreateLookAt(Location.Position, Location.Position + Location.Forward, Location.Up);
-        //Note that the apsect ratio calculation must be performed as a float, otherwise integer division will be performed (truncating the result).
-        var projection = Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(80), (float)size.X / size.Y, 0.1f, 1000.0f);
+        //Note that the aspect ratio calculation must be performed as a float, otherwise integer division will be performed (truncating the result).
+        var projection = Matrix4x4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(80), (float)size.X / (float)size.Y, 0.1f, 1000.0f);
 
         foreach (var mesh in Model.Meshes)
         {
@@ -95,44 +99,55 @@ public class Camera
         }
     }
 
-    public void Update(double deltaTime)
+    private double time = 0;
+    public void Update(double ddeltaTime)
     {
+        float deltaTime = (float)ddeltaTime;
+        float moveSpeed = 10;
         if (CameraMode == CameraMode.Freecam)
         {
+            time += ddeltaTime;
             Input.SetCursorMode(CursorMode.Raw);
-            float moveSpeed = 5f * (float)deltaTime;
-            IKeyboard? primaryKeyboard = Input.GetKeyboard();
             if (primaryKeyboard != null)
             {
+                Vector3 delta = new(0, 0, 0);
                 if (primaryKeyboard.IsKeyPressed(Key.W))
                 {
                     //Move forwards
-                    Location.Position += Location.Forward * moveSpeed;
+                    delta += Location.Forward * deltaTime * moveSpeed;
                 }
                 if (primaryKeyboard.IsKeyPressed(Key.S))
                 {
                     //Move backwards
-                    Location.Position -= Location.Forward * moveSpeed;
+                    delta -= Location.Forward * deltaTime * moveSpeed;
                 }
                 if (primaryKeyboard.IsKeyPressed(Key.A))
                 {
                     //Move left
-                    Location.Position -= Vector3.Normalize(Vector3.Cross(Location.Forward, Location.Up)) * moveSpeed;
+                    delta += Location.Left * deltaTime * moveSpeed;
                 }
                 if (primaryKeyboard.IsKeyPressed(Key.D))
                 {
                     //Move right
-                    Location.Position += Vector3.Normalize(Vector3.Cross(Location.Forward, Location.Up)) * moveSpeed;
+                    delta += Location.Right * deltaTime * moveSpeed;
                 }
 
                 if (primaryKeyboard.IsKeyPressed(Key.E))
                 {
-                    Location.Position += Location.Up * moveSpeed;
+                    delta += Location.Up * deltaTime * moveSpeed;
                 }
 
                 if (primaryKeyboard.IsKeyPressed(Key.Q))
                 {
-                    Location.Position -= Location.Up * moveSpeed;
+                    delta -= Location.Up * deltaTime * moveSpeed;
+                }
+
+                Location.Position += delta;
+
+                if (time >= 1)
+                {
+                    time = 0;
+                    Engine._logger.Info($"GameCamera moved with delta {Location.Position.X}, {Location.Position.Y}, {Location.Position.Z}. Speed was {deltaTime * moveSpeed}");
                 }
             }
         }

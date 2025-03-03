@@ -16,6 +16,7 @@ class Program
         var options = WindowOptions.Default;
         options.Size = new Vector2D<int>(800, 600);
         options.Title = "MXEngine";
+        options.FramesPerSecond = 120;
         _window = Window.Create(options);
         
         _window.Load += WindowOnLoad;

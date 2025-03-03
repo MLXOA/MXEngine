@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using MeltySynth;
-using MXEngine.Graphics.AppSupport;
 using MXEngine.Graphics.Core;
 using MXEngine.Interfacing;
 using Silk.NET.Core;
@@ -57,8 +56,6 @@ public unsafe class Engine(IWindow Window)
         };
         Interfacing.Audio.Initialize();
         State = EngineState.Running;
-        Interfacing.Audio.CreateMidiPlayer(Interfacing.Audio.DefaultSoundfont)
-            .Play(new MidiFile(Resources.GetStream("MXEngine.Audio.DefaultResources.M_E1M1.mid")!, MidiFileLoopType.None), true);
     }
 
     /// <summary>
