@@ -1,5 +1,5 @@
 # MXEngine
-MLXOA's new game engine for fast development, built entirely in C#. Supports Windows 10+[^1], and Linux. MXEngine **can** run on macOS[^2], but is not supported in any way by MLXOA.
+MLXOA's new work-in-progress game engine for fast development, built entirely in C#. Supports Windows 10+[^1], and Linux. MXEngine **can** run on macOS[^2], but is not supported in any way by MLXOA.
 
 Tips for deploying games using MXEngine:
 1. Inform users if one or more MXEngine assemblies are incompatible with builds from this repository.
