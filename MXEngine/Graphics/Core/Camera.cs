@@ -12,8 +12,6 @@ namespace MXEngine.Graphics.Core;
 public class Camera
 {
     public Location Location = new Location();
-    public float Yaw = -90;
-    public float Pitch = 0;
     public CameraMode CameraMode = CameraMode.None;
     public bool Is3D = true;
 
@@ -39,6 +37,8 @@ public class Camera
     }
     
     Vector2D<float> LastMousePosition;
+    private float yaw = 0;
+    private float pitch = 0;
     
     private void InputOnMouseMove(Vector2D<float> position)
     {
@@ -55,22 +55,18 @@ public class Camera
             var yOffset = (position.Y - LastMousePosition.Y) * lookSensitivity;
             LastMousePosition = position;
 
-            Yaw -= xOffset;
-            Pitch += yOffset;
+            yaw -= xOffset;
+            pitch += yOffset;
 
-            //We don't want to be able to look behind us by going over our head or under our feet so make sure it stays within these bounds
-            Pitch = Math.Clamp(Pitch, -89.0f, 89.0f);
-
-            Location.Rotation.X = Pitch;
-            Location.Rotation.Y = Yaw;
+            Location.Orientation = Quaternion.CreateFromYawPitchRoll(MathHelper.DegreesToRadians(yaw), MathHelper.DegreesToRadians(pitch), 0);
         }
     }
 
     public void Render(double deltaTime)
     {
         Gl.Enable(EnableCap.DepthTest);
-        Gl.Enable(EnableCap.CullFace);
-        Gl.CullFace(TriangleFace.Back);
+        //Gl.Enable(EnableCap.CullFace);
+        //Gl.CullFace(TriangleFace.Back);
         Gl.ClearColor(Color.FromArgb(255, 157, 193, 227));
         Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -99,14 +95,11 @@ public class Camera
         }
     }
 
-    private double time = 0;
-    public void Update(double ddeltaTime)
+    public void Update(float deltaTime)
     {
-        float deltaTime = (float)ddeltaTime;
         float moveSpeed = 10;
         if (CameraMode == CameraMode.Freecam)
         {
-            time += ddeltaTime;
             Input.SetCursorMode(CursorMode.Raw);
             if (primaryKeyboard != null)
             {
@@ -124,7 +117,7 @@ public class Camera
                 if (primaryKeyboard.IsKeyPressed(Key.A))
                 {
                     //Move left
-                    delta += Location.Left * deltaTime * moveSpeed;
+                    delta += -Location.Right * deltaTime * moveSpeed;
                 }
                 if (primaryKeyboard.IsKeyPressed(Key.D))
                 {
@@ -143,12 +136,6 @@ public class Camera
                 }
 
                 Location.Position += delta;
-
-                if (time >= 1)
-                {
-                    time = 0;
-                    Engine._logger.Info($"GameCamera moved with delta {Location.Position.X}, {Location.Position.Y}, {Location.Position.Z}. Speed was {deltaTime * moveSpeed}");
-                }
             }
         }
     }

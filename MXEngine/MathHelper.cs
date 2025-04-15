@@ -1,4 +1,4 @@
-﻿namespace MXEngine.Core;
+﻿namespace MXEngine;
 
 public static class MathHelper
 {

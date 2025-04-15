@@ -50,6 +50,7 @@ class Program
     private static void WindowOnLoad()
     {
         _engine = new Engine(_window);
+        _engine.Size = _window.Size;
         _engine.Start();
     }
 }

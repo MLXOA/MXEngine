@@ -22,6 +22,11 @@ public class Input
         CreateInputContext();
     }
 
+    internal static void Create(IWindow window)
+    {
+        Instance = new Input(window);
+    }
+
     /// <summary>
     /// Create the IInputContext and register events.
     /// </summary>
@@ -101,12 +106,6 @@ public class Input
             if (mouse.Cursor.CursorMode != mode) flag = true;
             mouse.Cursor.CursorMode = mode;
         }
-
-        // TODO: Apply CursorMode without changing WindowState
-        if (!flag) return;
-        _window.WindowState = WindowState.Minimized;
-        Thread.Sleep(150);
-        _window.WindowState = WindowState.Normal;
     }
 
     public static IMouse[]? GetMice()

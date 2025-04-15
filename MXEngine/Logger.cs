@@ -1,4 +1,4 @@
-﻿namespace MXEngine.Core;
+﻿namespace MXEngine;
 
 public class Logger(string identifier)
 {

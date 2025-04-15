@@ -4,7 +4,7 @@ namespace MXEngine.Core;
 
 public static class ObjectInstance
 {
-    [ThreadStatic] private static List<GameObject>? _gameObjects;
+    [ThreadStatic] private static List<Entity>? _gameObjects;
 
     /// <summary>
     /// Initialize the ObjectInstance "registry."
@@ -14,7 +14,7 @@ public static class ObjectInstance
         _gameObjects = [];
     }
 
-    public static void Register(GameObject gameObject)
+    public static void Register(Entity entity)
     {
         if (_gameObjects == null)
         {
