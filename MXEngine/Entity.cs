@@ -17,11 +17,6 @@ public sealed class Entity : IDisposable
     {
         _entities = new List<Entity>();
     }
-    
-    /// <summary>
-    /// The location of the GameObject.
-    /// </summary>
-    public Location Location = new Location();
 
     public Entity()
     {
@@ -48,4 +43,23 @@ public sealed class Entity : IDisposable
     {
         _entities!.Remove(this);
     }
+    
+    #region Properties
+    
+    /// <summary>
+    /// The name used for locating this object and showing it in the scene hierarchy.
+    /// </summary>
+    public string Name = "";
+    
+    /// <summary>
+    /// The location of the GameObject.
+    /// </summary>
+    public Location Location = new Location();
+    
+    /// <summary>
+    /// The parent of this entity, can be null.
+    /// </summary>
+    public Entity? Parent = null;
+    
+    #endregion
 }
